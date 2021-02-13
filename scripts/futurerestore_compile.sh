@@ -35,6 +35,8 @@ echo "Enter N if futurerestore will be used on A12 and lower devices (breaks A13
 read -p "[Input] Compile a13/a14 branch? (y/N) " a13a14
 if [[ $a13a14 == y ]] || [[ $a1314 == Y ]]; then
     git checkout a13/a14
+    git reset --hard
+    git submodule update
 fi
 ./autogen.sh ; make ; sudo make install ; cd ..
 sudo ldconfig
