@@ -28,11 +28,24 @@ cd libirecovery ; ./autogen.sh ; make ; sudo make install ; cd ..
 cd libgeneral ; ./autogen.sh ; make ; sudo make install ; cd ..
 cd libfragmentzip ; ./autogen.sh ; make ; sudo make install ; cd ..
 cd img4tool ; ./autogen.sh ; make ; sudo make install ; cd ..
-cd futurerestore ; ./autogen.sh ; make ; sudo make install ; cd ..
+cd futurerestore
+echo
+echo "Enter Y if futurerestore will be used on A13/A14 devices (breaks A11/A12 support)"
+echo "Enter N if futurerestore will be used on A12 and lower devices (breaks A13/A14 support)"
+read -p "[Input] Compile a13/a14 branch? (y/N) " a13a14
+if [[ $a13a14 == y ]] || [[ $a1314 == Y ]]; then
+    git checkout a13/a14
+fi
+./autogen.sh ; make ; sudo make install ; cd ..
 sudo ldconfig
 
 echo
 echo "Done"
+if [[ $a13a14 == y ]] || [[ $a1314 == Y ]]; then
+    echo "The compiled futurerestore is for A13/A14 DEVICES, A11/A12 WILL NOT WORK!"
+else
+    echo "The compiled futurerestore DOES NOT include A13/A14 support!!"
+fi
 echo "Run futurerestore AT YOUR OWN RISK; Things are not guaranteed to work"
 echo
 echo "Launching futurerestore after compiling: sudo futurerestore <arguments>"
